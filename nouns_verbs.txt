@@ -1,0 +1,16 @@
+Nouns:
+
+Card (is card a subclass of deck?)
+Deck
+Player
+Dealer (is dealer a subclass of player or vice versa? Make human superclass for what they share in common)
+Blackjack (engine that runs the game overall)
+
+Verbs:
+
+- Shuffle
+- Deal cards
+- Play a round (player)
+- Play a round (dealer)
+- Evaluate who won (when does this happen, end of each round?)
+- Play again or not (in blackjack engine) 
