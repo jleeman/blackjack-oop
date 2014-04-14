@@ -118,11 +118,11 @@ end
 
 # this is the "engine" that runs blackjack game
 class Blackjack
-  attr_accessor :dealer, :players, :deck
+  attr_accessor :dealer, :player, :deck
 
   def initialize 
     @dealer = Dealer.new('Dealer')
-    @players = []
+    @player = []
     # can change how many decks get shuffled here, 4 vegas style
     @deck = Deck.new(4)
     run
