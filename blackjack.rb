@@ -1,37 +1,46 @@
-# super class - both dealer & players share name / scores / methods
+# super class - both dealer & players share name / scores / status method
 class Gambler
-  attr_accessor :name, :score
+  attr_accessor :name, :score, :status
 
   def initialize(n,s)
     @name = n
     @score = s
   end
 
-  def blackjack?
-    if @score == 21
-      return true
-    else
-      return false
+  # takes current score as input - returns blackjack/bust as string or current score if neither, kinda sloppy maybe rethink this
+  def status(s)
+    status = s
+    if s == 21
+      status = 'blackjack'
+    elsif s > 21
+      status = 'bust'
     end
-  end
-
-  def bust?
-    if @score > 21
-      return true
-    else
-      return false
-    end
+    status
   end
 end
 
 class Dealer < Gambler
-  def ask_name
-    "What is your name?"
+  # speaks, takes what to speak string as input
+  def speak(s)
+    case s 
+      when 'welcome'
+        'My name is #{name}. Welcome to the casino!!!'
+      when 'name'
+        'What is your name?'
+      when 'play'
+        'Shoud we play another game?'
+      when 'hit'
+        'Do you want to hit or not?'
+    end
   end
 end
 
 class Player < Gambler
+  attr_accessor :play_again
+  
+  def round(s)
 
+  end
 end
 
 class Deck
@@ -45,9 +54,9 @@ class Deck
     @cards = []
     @num_decks = n
     @num_decks.times do 
-      SUITS.each do |suit|
-        VALUES.each do |value|
-          @cards << Card.new(suit,value)
+      SUITS.each do |s|
+        VALUES.each do |v|
+          @cards << Card.new(s,v)
         end
       end
     end
@@ -62,12 +71,11 @@ class Deck
     @cards.shuffle
   end
 
-  #takes how many cards to deal as input
+  #takes any number cards to deal as input, returns the dealt cards
   def deal(n)
-    @num_cards = n
-    @num_cards.times do
-      @cards.pop
-    end
+    @dealt_cards = []
+    n.times {@dealt_cards << @cards.pop}
+    @dealt_cards
   end
 end
 
@@ -84,29 +92,44 @@ class Card
   end
 end
 
-# this is the "engine" that runs blackjack game
+# this is the "engine" that runs blackjack game, takes number of players as input
 class Blackjack
-  attr_accessor :num_players, :players
+  attr_accessor :num_players, :players, :deck
 
   def initialize(n)
     @num_players = n
-    @dealer = Dealer.new('Dealer', 0)
-    @players = [] 
+    @dealer = Dealer.new('Frank', 0)
+    @players = []
+    @num_games = 0
+    if @num_games == 0
+      puts @dealer.speak('welcome')
+    end
+    player_id = 1
     @num_players.times do
-      puts @dealer.ask_name
+      puts "Player #{player_id}, " + @dealer.speak('name')
       name = gets.chomp
       @players << Player.new(name, 0)
+      player_id += 1
     end
+    @deck = Deck.new(4)
   end
 
+  # players take turns
+  def player_rounds
+    @players.each do |p| 
+     p.round
+    end
+  end
+  
   def display_players
     "#{players}"
   end
 end
 
 # sets up game with number of players here, maybe ask how many playing instead
+
 game = Blackjack.new(3)
-players = game.display_players
-puts players
+puts game.display_players
+
 
 
