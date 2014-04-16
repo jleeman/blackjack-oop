@@ -131,7 +131,6 @@ end
 class Blackjack
 
   def initialize
-    @play_again = true 
     dealer = Dealer.new("Dealer")
     player_name = dealer.q_a("Welcome to the casino! What's your name?")
     player = Player.new("#{player_name}")
