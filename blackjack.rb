@@ -206,19 +206,19 @@ class Blackjack
   # evaluate player totals against dealer total, add/subtract wagers & display
   def evaluate_winners(players, dealer)
     players.each do |p|
-      if dealer.bust?(dealer.hand_total)
+      if dealer.bust?(dealer.hand_total) && p.bust?(p.hand_total) != true
         puts "Dealer went bust, #{p.name} beat the dealer!"
         p.chips += p.wager
         puts "#{p.name} now has #{p.chips} chips."
-      elsif p.hand_total > dealer.hand_total
+      elsif p.hand_total > dealer.hand_total && p.bust?(p.hand_total) != true
         puts "#{p.name}'s hand better than the dealer!"
         p.chips += p.wager
         puts "#{p.name} now has #{p.chips} chips."
-      elsif p.hand_total == dealer.hand_total
+      elsif p.hand_total == dealer.hand_total && p.bust?(p.hand_total) != true
         puts "It's a push betwen #{p.name} and #{dealer.name}"
         puts "#{p.name} now has #{p.chips} chips."
       else
-        puts "Bummer, #{p.name}, the dealer won."
+        puts "Bummer, #{p.name}, you lost."
         p.chips -= p.wager
         puts "#{p.name} now has #{p.chips} chips."
       end
@@ -238,6 +238,8 @@ class Blackjack
         puts "#{p.hand.last.display}"
         puts "#{p.name} now has a total of #{p.hand_total}"
         puts "---"
+      else
+        puts "#{p.name} chose to stay, has a total of #{p.hand_total}"
       end
       p.hand_total = p.total(p.hand)
     end
