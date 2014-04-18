@@ -215,7 +215,7 @@ class Blackjack
         p.chips += p.wager
         puts "#{p.name} now has #{p.chips} chips."
       elsif p.hand_total == dealer.hand_total && p.bust?(p.hand_total) != true
-        puts "It's a push betwen #{p.name} and #{dealer.name}"
+        puts "It's a push between #{p.name} and #{dealer.name}"
         puts "#{p.name} now has #{p.chips} chips."
       else
         puts "Bummer, #{p.name}, you lost."
