@@ -140,9 +140,9 @@ class Blackjack
   def play(deck, players, dealer)
     deck.first_deal(dealer, players)
     player_rounds(deck, players, dealer)
-    if dealer_round?(players)
+    
       dealer_round(deck, dealer)
-    end
+    
     evaluate_winners(players, dealer)
   end
 
@@ -194,9 +194,10 @@ class Blackjack
         puts "---"
         if dealer.blackjack?(dealer.hand)
           puts "#{dealer.name} hit blackjack!"
+          dealer.hand_total
         elsif dealer.bust?(dealer.hand_total)
           puts "#{dealer.name} went bust."
-          dealer.hand_total = dealer.total(dealer.hand)
+          dealer.hand_total
         end
       end
     end
@@ -242,18 +243,6 @@ class Blackjack
         puts "#{p.name} chose to stay, has a total of #{p.hand_total}"
       end
       p.hand_total = p.total(p.hand)
-    end
-  end
-
-  # evaluate whether dealer actually plays round, if any player hit blackjack, no
-  def dealer_round?(players)
-    players.each do |p|
-      if p.blackjack?(p.hand_total)
-        false
-        break
-      else
-        true
-      end
     end
   end
 
