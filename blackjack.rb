@@ -146,7 +146,7 @@ class Blackjack
     evaluate_winners(players, dealer)
   end
 
-  # player rounds happen, if somebody hits blackjack, break out
+  # player rounds happen
   def player_rounds(deck, players, dealer)
     players.each do |p|
       p.wager = q_a("#{p.name}, How much would you like to wager this round?").to_i
