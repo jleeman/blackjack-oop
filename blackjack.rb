@@ -140,9 +140,7 @@ class Blackjack
   def play(deck, players, dealer)
     deck.first_deal(dealer, players)
     player_rounds(deck, players, dealer)
-    
-      dealer_round(deck, dealer)
-    
+    dealer_round(deck, dealer)
     evaluate_winners(players, dealer)
   end
 
